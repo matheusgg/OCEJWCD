@@ -1,0 +1,34 @@
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+            http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+         version="2.4">
+
+  <filter>
+    <filter-name>NoCommitFilter</filter-name>
+    <filter-class>garnerpress.NoCommitFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>NoCommitFilter</filter-name>
+    <url-pattern>/chapter7/index2.jsp</url-pattern>
+  </filter-mapping>
+
+  <servlet>
+    <servlet-name>NoCommitPage</servlet-name>
+    <jsp-file>/chapter7/index2.jsp</jsp-file>
+  </servlet>
+
+  <!-- This one doesn't have any filter applied -->
+  <servlet-mapping>
+    <servlet-name>NoCommitPage</servlet-name>
+    <url-pattern>/chapter7/index.jsp</url-pattern>
+  </servlet-mapping>
+
+  <!-- This one has the filter applied -->
+  <servlet-mapping>
+    <servlet-name>NoCommitPage</servlet-name>
+    <url-pattern>/chapter7/index2.jsp</url-pattern>
+  </servlet-mapping>
+
+</web-app>

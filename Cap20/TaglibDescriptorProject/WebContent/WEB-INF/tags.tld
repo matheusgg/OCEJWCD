@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
+
+	<tlib-version>1.0</tlib-version>
+	<short-name>tags</short-name>
+	<uri>http://tags.com/custom</uri>
+
+	<!-- Um validator e chamado na primeira vez que uma pagina JSP, onde essa taglib esteja sendo referenciada, e requisitada pelo cliente. 
+		Sua funcao e validar o XML View a fim de verificar se nao ha nenhuma violacao que prejudique a execucao das tags dessa taglib. E possivel 
+		declarar apenas um validator por TLD. -->
+	<validator>
+		<validator-class>validator.CustomValidator</validator-class>
+		<init-param>
+			<param-name>name</param-name>
+			<param-value>value</param-value>
+		</init-param>
+	</validator>
+
+	<tag>
+		<name>conditionalWriter</name>
+		<tag-class>simpleTags.ConditionalWriter</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>test</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+	</tag>
+
+	<tag>
+		<name>boldWriter</name>
+		<tag-class>classicTags.BoldWriter</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+</taglib>

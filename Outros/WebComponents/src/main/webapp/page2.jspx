@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
+	<jsp:directive.page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" />
+	<![CDATA[<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">]]>
+
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Page2</title>
+</head>
+<body>
+	<h1>Page2</h1>
+	<![CDATA[Teste]]>
+
+	<hr />
+	<jsp:scriptlet>String page3 = "page3.jsp";</jsp:scriptlet>
+
+	<!-- Em JSP Documents, para expressoes avaliadas em tempo de execucao, ha um tipo de elemento que se assemelha as expressoes 
+		 em paginas jsp. Esses elementos se diferenciam das expressoes em jsp apenas pela ausencia dos sinais de menor e maior.
+		 A sintaxe correta e "%=%". Esse tipo de expressao so pode ser utilizado com JSP Documents, ou seja, nao e permitida a 
+		 utilizacao em JSP pages tradicionais. -->
+	<c:out value="%=page3%" />
+	<jsp:include page="%=page3%">
+		<jsp:param value="valor" name="param1" />
+	</jsp:include>
+</body>
+	</html>
+
+</jsp:root>

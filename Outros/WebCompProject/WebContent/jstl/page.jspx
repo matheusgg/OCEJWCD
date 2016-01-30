@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
+	<jsp:directive.page import="java.util.*" />
+	<jsp:directive.page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" />
+	<jsp:text>
+		<![CDATA[<!DOCTYPE html> ]]>
+	</jsp:text>
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>JSTL</title>
+</head>
+<body>
+	<!-- c:catch -->
+	<c:catch var="throwable">
+		<jsp:scriptlet>if (request.getParameter("erro") != null) {
+					throw new IllegalArgumentException("Parametro erro encontrado!");
+				}</jsp:scriptlet>
+	</c:catch>
+	<jsp:text>${throwable}</jsp:text>
+	<hr />
+
+	<!-- c::choose -->
+	<c:choose>
+		<c:when test="${param.teste1}">
+			<jsp:text>Teste1</jsp:text>
+		</c:when>
+		<c:when test="${param.teste2}">
+			<jsp:text>Teste2</jsp:text>
+		</c:when>
+		<c:otherwise>
+			<jsp:text>Otherwise</jsp:text>
+		</c:otherwise>
+	</c:choose>
+	<hr />
+
+	<!-- c:forEach -->
+	<c:forEach items="1,2,3,4,5" begin="0" end="5" var="item" step="2" varStatus="status">
+		${status.current} <br />
+	</c:forEach>
+	<hr />
+
+	<!-- c:forTokens -->
+	<c:forTokens items="1,2,3,4,5" delims="," var="item">
+		${item}<br />
+	</c:forTokens>
+	<hr />
+
+	<!-- c:if -->
+	<c:if test="${param.test}" var="testeVar" scope="request">
+		<h1>Condicao satisfeita</h1>
+	</c:if>
+	<h3>${testeVar}</h3>
+	<hr />
+
+	<!-- c:import -->
+	<!--<c:import url="http://www.google.com.br" var="google" scope="request" />
+	${google}
+	
+	<c:import url="http://www.google.com.br" varReader="reader">
+		${reader}
+	</c:import>-->
+	<c:import url="/jstl/page2.jsp" context="/WebCompProject">
+		<c:param name="var" value="Teste1" />
+		<c:param name="var2">Teste2</c:param>
+	</c:import>
+	<c:import url="page2.jsp" var="page2" scope="session" />
+	<br />${page2}
+	<hr />
+
+	<!-- c:out -->
+	Bem Vindo
+	<c:out value="${param.user}" escapeXml="true">visitante</c:out>
+	<hr />
+
+	<!-- c:set -->
+	<c:set var="paramSet" value="Teste" scope="request" />
+	${requestScope}
+	<br />
+	<jsp:useBean scope="request" id="cliente" class="model.Cliente">
+		<jsp:setProperty name="cliente" property="nome" value="Matheus" />
+	</jsp:useBean>
+	<c:set target="${cliente}" property="idade" value="21" />
+
+	Nome:
+	<jsp:getProperty property="nome" name="cliente" />
+	<br /> Idade:
+	<jsp:getProperty property="idade" name="cliente" />
+	<br />
+
+	<jsp:scriptlet><![CDATA[Map<String, String> mapa = new HashMap<String, String>();
+			pageContext.setAttribute("mapa", mapa);]]></jsp:scriptlet>
+	${mapa}
+	<c:set target="${mapa}" property="chave" value="valor" />
+	<br /> ${mapa}
+	<br /> ${requestScope}
+	<hr />
+
+	<!-- c:remove -->
+	Before remove: ${requestScope}
+	<c:remove var="cliente" scope="request" />
+	<br /> After remove: ${requestScope}
+	<hr />
+	
+	<!-- c:url -->
+	<c:url value="/jstl/page2.jsp" context="/WebCompProject">
+		<c:param name="param1" value="Valor" />
+	</c:url>
+
+</body>
+	</html>
+</jsp:root>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+	<display-name>WebComponentsProject</display-name>
+
+	<!-- SERVLETS -->
+
+	<!-- Mapeamento de Servlet, a declaracao da servlet esta na anotacao na propria classe -->
+	<servlet-mapping>
+		<servlet-name>configServlets.Servlet</servlet-name>
+		<url-pattern>/map1</url-pattern> <!-- UrlPattern (sem o s), na anotacao é UrlPatterns (com s) -->
+	</servlet-mapping>
+
+	<!-- Definicao da servlet, o mapeamento se encontra na anotacao da propria classe. Em servlets, caso alguma configuracao esteja aqui no web.xml, as outras configuracoes 
+		(como mapeamento) que estiverem na classe podem ser utilizados. -->
+	<servlet>
+		<servlet-name>Servlet2</servlet-name>
+		<servlet-class>configServlets.Servlet2</servlet-class>
+		<init-param>
+			<param-name>servlet2Param</param-name>
+			<param-value>teste</param-value>
+		</init-param>
+	</servlet>
+
+	<!-- FILTERS -->
+
+	<!-- Definicao do filtro, o mapeamento se encontra na anotacao da classe, porem sera ignorado, pois ja foi definido um mapeamento aqui. Caso alguma configuracao 
+		de filtro esteja aqui no web.xml, tudo que esta na anotacao da classe é ignorado, ou seja, se a definicao estiver aqui e o mapeamento na classe, o filtro nao sera 
+		executado, pois nao foi encontrado um mapeamento aqui no web.xml. -->
+	<filter>
+		<filter-name>MyFilter</filter-name>
+		<filter-class>configFilters.MyFilter</filter-class>
+		<init-param>
+			<param-name>name</param-name>
+			<param-value>value</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>MyFilter</filter-name>
+		<url-pattern>/map3</url-pattern>
+	</filter-mapping>
+
+
+	<!-- Mapeamento do MyFilter2, a definicao esta na classe -->
+	<filter-mapping>
+		<filter-name>MyFilter2</filter-name>
+		<url-pattern>/map5</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+
+	<!-- Mapeamento MyFilter3 -->
+	<filter>
+		<filter-name>MyFilter3</filter-name>
+		<filter-class>filterBasics.MyFilter3</filter-class>
+		<init-param>
+			<param-name>name</param-name>
+			<param-value>value</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>MyFilter3</filter-name>
+		<url-pattern>/map6</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+
+
+	<!-- FILTER CHAIN -->
+	<filter-mapping>
+		<filter-name>filterChain.Filter2</filter-name>
+		<url-pattern>/map7</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>filterChain.Filter1</filter-name>
+		<url-pattern>/map7</url-pattern>
+	</filter-mapping>
+
+
+	<!-- FILTER MAPPING -->
+	<filter>
+		<filter-name>MyFilter5</filter-name>
+		<filter-class>filterMapping.MyFilter5</filter-class>
+	</filter>
+
+	<filter>
+		<filter-name>MyFilter6</filter-name>
+		<filter-class>filterMapping.MyFilter6</filter-class>
+	</filter>
+
+	<!-- Um filter-mapping pode conter multiplos url-pattern e servlet-name -->
+	<filter-mapping>
+		<!-- Nao é permitido definir mais do que um filtro no filter mapping, caso isso seja feito, o ultimo filtro declarado sera considerado. -->
+		<filter-name>MyFilter5</filter-name> <!-- Esse filter sera ignorado -->
+		<url-pattern>/map11</url-pattern>
+		<url-pattern>/map12</url-pattern>
+
+
+		<filter-name>MyFilter6</filter-name> <!-- Esse filtro sera considerado no mapeamento -->
+		<!-- Para mapear mais de um url pattern, é necessario declarar todos os patterns individualmente -->
+		<url-pattern>/map11</url-pattern>
+		<url-pattern>/map12</url-pattern>
+
+		<!-- Isso nao significa que esse filtro possui 2 mapeamentos, mas sim um unico mapeamento com o caminho '/map11, /map12' -->
+		<url-pattern>/map11, /map12</url-pattern> <!-- Invalido -->
+	</filter-mapping>
+
+	<!-- Para declarar mais de um filtro para a mesma URL deve-se criar outro filter-mapping -->
+	<filter-mapping>
+		<filter-name>MyFilter5</filter-name>
+		<url-pattern>/map11</url-pattern>
+		<url-pattern>/map12</url-pattern>
+	</filter-mapping>
+</web-app>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core" version="2.0">
+	<jsp:directive.tag language="java" pageEncoding="UTF-8" body-content="scriptless" trimDirectiveWhitespaces="true" />
+	<jsp:directive.attribute name="test" rtexprvalue="true" required="true" type="java.lang.Boolean" />
+	<jsp:directive.attribute name="bold" rtexprvalue="true" required="false" type="java.lang.Boolean" />
+	
+	<!-- Quando um fragment attribute e declarado, nao e possivel especificar um type ou rtexprvalue -->
+	<jsp:directive.attribute name="fragment" fragment="true" />
+	
+	<jsp:directive.attribute name="evaluateFragments" type="java.lang.Boolean" rtexprvalue="true"/>
+
+	<c:if test="${test}">
+		<!-- Com a action doBody e possivel avaliar o conteudo informado na action dessa tag declaada na JSP, desta forma
+			 e possivel simular o comportamento de invoke(null), onde o conteudo e escrito diretamente no objeto implicito
+			 out. Com jsp:doBody, o conteudo da action e avaliado e escrito na resposta.-->
+		<c:choose>
+			<c:when test="${bold}">
+				<b> <jsp:doBody />
+				</b>
+			</c:when>
+			<c:otherwise>
+				<jsp:doBody />
+			</c:otherwise>
+		</c:choose>
+	</c:if>
+	
+	<c:if test="${evaluateFragments}">
+		<br />
+		
+		<!-- A action jsp:invoke serve para invocar a avaliacao do JspFragment especificado -->
+		<jsp:invoke fragment="fragment" />
+	</c:if>
+</jsp:root>

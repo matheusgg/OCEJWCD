@@ -1,0 +1,10 @@
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:c="http://java.sun.com/jsp/jstl/core">
+<!-- This generates a page-scoped attribute with a random price distributed uniformly in integers [-5,25] -->
+<jsp:scriptlet>pageContext.setAttribute("price", new java.util.Random().nextInt(26)-5);</jsp:scriptlet>
+...
+Price of item:
+<c:if test="${ price > 0 }">${ price }</c:if>
+<c:if test="${ price le 0 }">[not available]</c:if>
+...
+</jsp:root>

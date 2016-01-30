@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
+	<tlib-version>1.0</tlib-version>
+	<short-name>tagFiles</short-name>
+
+	<uri>http://tagFiles.com/tags</uri>
+
+	<!-- E possivel declarar Tag Files em um TLD. Tag Files deve ficar localizadas dentro da pasta /WEB-INF/tags
+		 ou /META-INF/tags -->
+	<tag-file>
+		<name>out</name>
+		<path>/WEB-INF/tags/out.tag</path>
+	</tag-file>
+</taglib>

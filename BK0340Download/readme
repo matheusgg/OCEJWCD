@@ -1,0 +1,100 @@
+OCEJWCD Study Companion (3rd Edition)
+Charles Lyons
+Publisher: Garner Press
+ISBN: 0955160340
+================================================================
+
+Download Bundle
+===============
+
+This WAR file constitutes a completely deployable application containing all code examples used throughout the book and a few additional helper classes. Source code is supplied along with the binaries, where appropriate.
+
+
+Disclaimer
+----------
+
+Download bundle Copyright (C) Charles E. Lyons 2006-2013.
+
+All rights reserved. Any software code examples listed in this download may be entered, stored, modified and executed in a computer system, but they may not be reproduced for publication.
+
+This download has been carefully produced to be as accurate as possible. However, due to human, electronic and mechanical error, neither the publisher nor author(s) guarantee the accuracy, integrity or completeness of any information contained wherein, and are not responsible for any errors or omissions or the results obtained from any use of such information. The information contained in this download is sold without warranty, either express or implied. Neither the publisher nor author(s) will be held liable for any damages caused or alledged to be caused either directly or indirectly by use of the information contained in this download.
+
+If you believe there is a genuine error with the content in this download, please e-mail sales@garnerpress.com with a complete description of the problem, and any recommendations for the solution if possible. Please note that we cannot provide support for your own software installations or configurations and any such requests for assistance are likely to be ignored.
+
+
+Requirements
+------------
+
+To read the contents of this WAR and the JAR file, you only need a JAR or ZIP extractor and a plain-text reader.
+
+To run the Web application, you will require a JSP 2.0-compliant container and an installation of Java SE 5.0 (this is important as some examples may use language features available only in this version of the platform; otherwise you will see ClassFormatErrors). The two popular examples are Glassfish (which also includes an EJB container) and Tomcat, the latest versions of which can be downloaded free of charge from (respectively):
+
+http://glassfish.java.net/public/downloadsindex.html
+http://tomcat.apache.org/
+
+Furthermore, you will need the Java Standard Tag Library (JSTL) 1.1 installed. You may also wish to experiment with the JSTL 1.0 version, although this is not required. If your container does not already come with the JSTL 1.1 libraries installed, you should download them from:
+
+http://jakarta.apache.org/taglibs/
+
+and install them into the shared or common lib path in your container. Note that AppServer comes pre-installed with JSTL 1.0 and 1.1. For Tomcat, place the JSTL JAR files into the {domain root}/shared/lib/ directory.
+
+
+Installation of Binaries
+------------------------
+
+You can deploy this WAR file as-is to your J2EE Web server. Provided your system meets the requirements above, all resources will then be accessible underneath your chosen context root. In particular, if {context_root} is the context assigned to this application, this readme will be available at:
+
+{context_root}/readme
+
+All URLs given below are context-relative, so for example, /chapter7/index2.jsp is actually:
+
+{context_root}/chapter7/index2.jsp
+
+
+Contents
+--------
+
+This list shows the files contained in this WAR and which chapters in the book they relate to. Files with names of the form pXXX.jsp or pXXX.jspx are based on or extracted from an example on page XXX of the book.
+
+Chapter 7:
+/WEB-INF/classes/garnerpress/NoCommitmentResponseWrapper
+/WEB-INF/classes/garnerpress/NoCommitFilter
+/chapter7/index2.jsp
+/chapter7/auth.jsp
+
+# NOTE: For chapter 7 we use web.xml to map the SAME index2.jsp to BOTH of the URLs 
+# /chapter7/index.jsp (with no wrapper) and /chapter7/index2.jsp (invokes wrapper and filter). 
+# Try both URLs to see the different behaviour caused by using the wrapper and not.
+# Note that web.xml declares the JSPs as <servlet>s and uses two <servlet-mapping>s to
+# map the same JSP to two different URLs. We could have duplicated the same JSP as two identical files,
+# index.jsp and index2.jsp, but that is unnecessary and redundancy should always be avoided.
+
+Chapter 13:
+/chapter13/banner.jsp  [This is included in index.jsp using an include directive]
+/chapter13/index.jsp
+/chapter13/p247.jsp
+
+Chapter 14:
+/chapter14/p272.jspx
+/chapter14/p273.jspx
+/chapter14/p274.jspx
+/chapter14/p276.jspx
+
+Chapter 15:
+/chapter15/p291.jspx
+/chapter15/p292.jspx
+/chapter15/exchange.jsp [EL exchange function usage]
+/WEB-INF/classes/mypackage/MyExchangeClass [EL exchange function implementation]
+/WEB-INF/exchange.tld [EL exchange function TLD]
+
+Chapter 18:
+/chapter18/index.jsp  [sample guestbook data included inline - bad idea!]
+/chapter18/indexs.jsp [uses a helper bean to obtain guestbook data - much better!]
+/chapter18/included.txt [included in index.jsp using a tag]
+/chapter18/CoopTags.jsp [cooperating tags example]
+/WEB-INF/lib/mytags.jar [contains source and binaries for tag handlers and TLDs]
+/WEB-INF/classes/helpers/GuestbookHelper  [helper bean for /indexs.jsp]
+
+Chapter 19:
+/chapter19/calendartest.jsp
+/WEB-INF/tags/* [tag files]

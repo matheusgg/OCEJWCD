@@ -1,0 +1,14 @@
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+<!-- Setup the variables using the PageContext API; could also use JSTL's <c:set /> -->
+<jsp:scriptlet>
+  /* Set the page-scoped attributes; we could also have enclosed this block in a CDATA section */
+  pageContext.setAttribute("normalsize", new Integer(12));
+  pageContext.setAttribute("parapercent", new Double(0.85));
+</jsp:scriptlet>
+
+...
+<body>
+<p style="font-size: ${ normalsize * parapercent }pt;">Some text</p>
+</body>
+...
+</jsp:root>

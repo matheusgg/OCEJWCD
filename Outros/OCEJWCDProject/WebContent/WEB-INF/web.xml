@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+	<display-name>OCEJWCDProject</display-name>
+
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
+	<filter>
+		<filter-name>AppFilter</filter-name>
+		<filter-class>filters.AppFilter</filter-class>
+	</filter>
+
+	<login-config>
+		<auth-method>BASIC</auth-method>
+		<realm-name>Digite o usuario e a senha</realm-name>
+	</login-config>
+
+	<security-role>
+		<role-name>admin</role-name>
+	</security-role>
+
+	<servlet>
+		<servlet-name>Teste</servlet-name>
+		<servlet-class>servlets.AppServlet1</servlet-class>
+		<load-on-startup>-1</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>Page</servlet-name>
+		<jsp-file>/page.jsp</jsp-file>
+		<async-supported>true</async-supported>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Page</servlet-name>
+		<url-pattern>/page.jsp</url-pattern>
+	</servlet-mapping>
+
+	<!-- <security-constraint> -->
+	<!-- <web-resource-collection> -->
+	<!-- <web-resource-name>sec</web-resource-name> -->
+	<!-- <url-pattern>/sec</url-pattern> -->
+	<!-- <http-method>POST</http-method> -->
+	<!-- </web-resource-collection> -->
+	<!-- <auth-constraint> -->
+	<!-- <role-name>*</role-name> -->
+	<!-- </auth-constraint> -->
+	<!-- </security-constraint> -->
+
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+		<location>/error.jsp</location>
+	</error-page>
+
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error2.jsp</location>
+	</error-page>
+
+
+	<!-- ============================= FILTER ORDER ================================= -->
+	<!-- <filter-mapping> -->
+	<!-- <filter-name>CompressFilter</filter-name> -->
+	<!-- <url-pattern>/FilterOrdering</url-pattern> -->
+	<!-- </filter-mapping> -->
+
+	<!-- <filter-mapping> -->
+	<!-- <filter-name>SecFilter</filter-name> -->
+	<!-- <servlet-name>FilterOrderingServlet</servlet-name> -->
+	<!-- </filter-mapping> -->
+
+	<!-- <filter-mapping> -->
+	<!-- <filter-name>LogFilter</filter-name> -->
+	<!-- <url-pattern>/FilterOrdering</url-pattern> -->
+	<!-- </filter-mapping> -->
+
+</web-app>

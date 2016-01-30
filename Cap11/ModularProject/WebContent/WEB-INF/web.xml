@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- A especificacao de servlets 3.0 adicionou tres grandes funcionalidades no desenvolvimento e implantacao de aplicacoes web. 1) O uso de annotation. 2) Web Fragments 
+	(pequenos fragmentos de configuracoes). 3) Adicao e configuracao de servlets, listeners, filters, etc programaticamente em tempo de execucao. -->
+
+<!-- Quando a aplicacao é implantada, o container verifica todas as classes em WEB-INF/classes e WEB-INF/lib para verificar se ha anotacoes. Porem isso consome mais 
+	memoria na inicializacao da aplicacao e pode ser um grande problema para o desenvolvedor, por este motivo, foi adicionado o atributo "metadata-complete" ao web.xml 
+	para informar que todas as configuracoes necessarias estao neste arquivo xml e que o container nao precisa escanear as classes em busca de anotacoes ou web-fragments. 
+	Porem é recomendado o uso de anotacoes e caso a memoria utilizada na inicializacao da aplicacao nao seja um problema, este atributo nao deve ser informado, ja que 
+	por padrao ele possui o valor false. -->
+
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0"><!-- metadata-complete="true"> -->
+	<display-name>ModularProject</display-name>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+	<!-- Caso a ordem seja definida no arquivo web.xml da aplicacao, qualquer elemento ordering declarado dentro dos web-fragments serao ignorados. Caso o web-fragment 
+		nao tenha um identificador explicito (name), e a ordem esteja declarado no web.xml sem o elemento others, entao esse web-fragment sera ignorado e suas configuracoes 
+		nao serao unidas na unidade de deploy criada. -->
+	<absolute-ordering>
+		<name>Fragmento 2</name>
+		<name>Fragmento 1</name>
+
+		<!-- Depois que o container carregou os web-fragments Fragmento 1 e 2, este elemento indica que todos os outros web-fragments (inclusive aqueles sem name) devem 
+			ser carregados -->
+		<others />
+	</absolute-ordering>
+
+	<context-param>
+		<param-name>param</param-name>
+		<param-value>Valor do web.xml</param-value>
+	</context-param>
+
+	<!-- <servlet> -->
+	<!-- <servlet-name>annotations.multipartConfig.UploadServlet</servlet-name> -->
+	<!-- <servlet-class>annotations.multipartConfig.UploadServlet</servlet-class> -->
+
+	<!-- É possivel configurar a servlet que recebera requisicoes de formulario com enctype=multipart/form-data no web.xml -->
+	<!-- <multipart-config> -->
+	<!-- Caminho do diretorio que armazenara os arquivos temporarios -->
+	<!-- <location>/Users/Matheus/Downloads</location> -->
+
+	<!-- Tamanho maximo do arquivo que podera ser enviado pelo browser na requisicao -->
+	<!-- <max-file-size>2097152</max-file-size> -->
+
+	<!-- Tamanho maximo da requisicao que contem os arquivos enviados -->
+	<!-- <max-request-size>-1</max-request-size> -->
+
+	<!-- Tamanho maximo limite de arquivo que sera mantido na memoria, caso ultrapasse, o arquivo é salvo em um diretorio temporario no disco -->
+	<!-- <file-size-threshold>1048576</file-size-threshold> -->
+	<!-- </multipart-config> -->
+	<!-- </servlet> -->
+
+</web-app>

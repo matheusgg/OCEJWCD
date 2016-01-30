@@ -1,0 +1,11 @@
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+          xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+  <!-- Add the attribute using a scriptlet -->
+  <jsp:scriptlet>request.setAttribute("image_source", "image.jpg");</jsp:scriptlet>
+
+  <jsp:text><![CDATA[<img src="]]></jsp:text>
+  <jsp:expression>request.getAttribute("image_source")</jsp:expression>
+  <![CDATA[" />]]>
+  <!-- Note that in the previous line we didn't use the <jsp:text> - the CDATA alone is sufficient in a JSP *document* (not in a page) -->
+</jsp:root>

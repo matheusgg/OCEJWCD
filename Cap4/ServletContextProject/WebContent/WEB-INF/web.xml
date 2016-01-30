@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+	<display-name>ServletContextProject</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+	<!-- Parametros de inicializacao de contexto. Diferentemente dos parametros de inicializacao de servlets, esses parametros ficam disponiveis para leitura no ServletContext 
+		da aplicacao para todas as servlets existentes -->
+	<context-param>
+		<param-name>contextParam1</param-name>
+		<param-value>value</param-value>
+	</context-param>
+
+	<servlet>
+		<servlet-name>InitServlet</servlet-name>
+		<servlet-class>initParams.InitServlet</servlet-class>
+
+		<!-- Parametros de inicializacao de servlet. Esses parametros ficam disponiveis no ServletConfig e apenas essa servlet pode vizualizar esses parametros -->
+		<init-param>
+			<param-name>param1</param-name>
+			<param-value>valor1</param-value>
+		</init-param>
+		<init-param>
+			<param-name>param2</param-name>
+			<param-value>valor2</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>InitServlet</servlet-name>
+		<url-pattern>/InitServlet</url-pattern>
+	</servlet-mapping>
+
+	<!-- Para criar um listener basta declara-lo no web.xml ou anota-lo com @WebListener -->
+	<!-- <listener> -->
+	<!-- <display-name>ServContextListener</display-name> -->
+	<!-- <listener-class>contextListeners.ServContextListener</listener-class> -->
+	<!-- </listener> -->
+	<listener>
+		<display-name>ServContextAttrListener</display-name>
+		<listener-class>contextListeners.ServContextAttrListener</listener-class>
+	</listener>
+</web-app>

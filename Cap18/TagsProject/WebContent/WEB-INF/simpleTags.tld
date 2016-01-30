@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
+	<tlib-version>1.0</tlib-version>
+	<short-name>simpleTags</short-name>
+	<uri>http://simpleTags.com</uri>
+
+	<tag>
+		<name>conditionalWriter</name>
+		<tag-class>simpleTags.ConditionalWriter</tag-class>
+		<body-content>tagdependent</body-content>
+		<attribute>
+			<name>test</name>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<dynamic-attributes>false</dynamic-attributes>
+	</tag>
+
+	<!-- Quando uma tag suporta a adicao de atributos dinamicos (atraves da adicao de atributos nao declarados no TLD ou jsp:attribute), 
+		ela deve ser o elemento dynamic-attributes habilitado como true. Desta forma o container nao lancara uma excecao na validacao quando 
+		encontrar um atributos especificado na tag que nao esta no TLD. -->
+	<tag>
+		<name>dynamicTag</name>
+		<tag-class>dynamicAttributes.DynamicTag</tag-class>
+		<body-content>scriptless</body-content>
+		<dynamic-attributes>true</dynamic-attributes>
+	</tag>
+
+	<tag>
+		<name>attrFragmentTag</name>
+		<tag-class>attributeFragment.AttrFragmentTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>attrFragment</name>
+			<fragment>true</fragment>
+		</attribute>
+	</tag>
+
+	<!-- O elemento variable serve para informar ao container que ele deve criar uma variavel de metodo dentro do metodo service. Deste 
+		forma, e possivel simular o comportamento de jsp:useBean, que cria uma instancia de um bean e atribui a referencia a uma variavel que 
+		pode ser utilizada dentro de scripts JSP. O escopo da variavel e informado em scope: NESTED indica que essa variavel possuira escopo 
+		de bloco, ou seja, ela estara disponivel apenas enquanto a tag estiver sendo executada (no arquivo fonte gerado essa variavel e criada 
+		dentro de uma bloco if); AT_BEGIN, indica que a variavel deve ser criada antes da execucao da tag e ficara disponivel depois que a 
+		mesma estiver completa. Durante a execucao da tag, o valor dessa variavel e atualizado; AT_END indica que essa variavel deve ser criada 
+		logo apos a execucao da tag. Assim que a variavel e criada ela e inicializada atraves da chamada ao metodo findAttribute de PageContext. 
+		A atualizacao do valor da variavel e conhecida como sincronizacao de variavel. -->
+	<!-- O elemento declare indica se essa variavel deve ser declarada dentro do metodo service ou nao, por padrao e true, porem pode 
+		ser desabilitada (false) caso haja certeza que uma variavel de metodo que possua o mesmo nome dessa variavel ja tenha sido declarada, 
+		deste modo. -->
+	<tag>
+		<name>scriptVariableTag</name>
+		<tag-class>scriptVariable.ScriptVariableTag</tag-class>
+		<body-content>JSP</body-content>
+		<variable>
+			<name-from-attribute>var</name-from-attribute>
+			<variable-class>java.lang.Integer</variable-class>
+			<declare>true</declare>
+			<scope>NESTED</scope>
+		</variable>
+		<attribute>
+			<name>var</name>
+			<required>true</required>
+			<type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>end</name>
+			<required>true</required>
+		</attribute>
+	</tag>
+</taglib>

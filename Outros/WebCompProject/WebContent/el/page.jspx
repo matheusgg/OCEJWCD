@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0">
+	<jsp:directive.page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" />
+	<jsp:text>
+		<![CDATA[<!DOCTYPE html> ]]>
+	</jsp:text>
+	<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>EL</title>
+</head>
+<body>
+	<jsp:scriptlet><![CDATA[boolean condicao = 10 < 20;]]></jsp:scriptlet>
+	<h1>
+		<jsp:expression>condicao</jsp:expression>
+	</h1>
+	
+	<p>
+		Ordem de precendencia de operadores EL
+		<ul>
+			<li>
+				[] . 
+			</li>
+			<li>
+				()
+			</li>
+			<li>
+				- ! not empty
+			</li>
+			<li>
+				* / div % mod
+			</li>
+			<li>
+				+ -
+			</li>
+			<li>
+				<![CDATA[< lt > gt <= le >= ge]]>
+			</li>
+			<li>
+				== eq != ne
+			</li>
+			<li>
+				<![CDATA[&& and]]>
+			</li>
+			<li>
+				|| or
+			</li>
+			<li>
+				? :
+			</li>
+		</ul>
+	</p>
+</body>
+	</html>
+</jsp:root>

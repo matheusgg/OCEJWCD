@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- O deployment descriptor (DD) ou simplesmente web.xml é o arquivo responsavel por descrever as configuracoes dos componentes web da aplicacao. Na versao 3.0 
+	da especificacao de servlets esse arquivo pode ser omitido e se tornou desnecessario a favor da configuracao atraves de anotacoes. -->
+
+<!-- Esquema ou DTD (Document Type Definition). Descreve as regras do arquivo xml. -->
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+
+	<!-- =========================================================================================================================================== -->
+	<!-- Quando um aplicacao web é implantada dentro do container web, a ordem de inicializacao comeca pelos Listeners, depois um instancia de ServletContext é criada, 
+		depois os Filtros sao instanciados e inicializados e, por fim, as servlets sao instanciadas e inicializadas (ou as JSP's sao instanciadas e traduzidas): Listeners 
+		> ServletContext > Filters > Servlets e JSP's (marcados com load-on-startup) -->
+
+	<!-- =========================================================================================================================================== -->
+
+	<!-- Welcome-file-list serve para especificar as páginas padroes da aplicacao web caso o caminho raiz '/' nao esteja mapeado para nenhum outro recurso. Ou seja, 
+		quando o usuario faz uma requisicao para o caminho /, o web container verifica se existe algum componente web (servlet ou jsp) mapeado para ele, caso nao tenha, 
+		o container assume que esse caminho é um diretorio, desta forma, tenta localizar dentro dessa pasta qualquer arquivo cujo nome seja compativel com os nomes informados 
+		em welcome-file dentro de welcome-file-list. Caso algum arquivo seja localizado, ele é imediatamente exibido, caso contrario, um erro 404 será retornado para o cliente. 
+		Conceitualmente, deveria existir apenas um welcome-file-list que listaria todas as paginas padroes, porem pode haver mais de um. -->
+	<welcome-file-list>
+		<!-- Arquivos que serao precurados no diretorio raiz ('/') -->
+		<welcome-file>/index.html</welcome-file>
+		<welcome-file>teste.txt</welcome-file>
+		<welcome-file>pages/teste.html</welcome-file>
+	</welcome-file-list>
+
+	<!-- =========================================================================================================================================== -->
+	<!-- Pode ser utilizado em varias partes do documento -->
+	<description>Descricao da Aplicacao</description>
+
+	<!-- =========================================================================================================================================== -->
+	<!-- Nome amigavel da aplicacao -->
+	<display-name>DeployProject</display-name>
+
+	<!-- =========================================================================================================================================== -->
+	<!-- O elemento distributable indica que essa aplicacao web pode executada em ambientes distribuidos ou clusterizados -->
+	<distributable />
+
+	<!-- =========================================================================================================================================== -->
+	<!-- Parametros inicializacao de aplicacao que sao armazenados na instancia de ServletContext quando a aplicacao é implantada no container. -->
+	<context-param>
+		<description>Descricao opcional do parametro de inicializacao</description>
+		<param-name>name</param-name>
+		<param-value>value</param-value>
+	</context-param>
+
+	<!-- =========================================================================================================================================== -->
+	<!-- Icone para ser utilizado por farramentas graficas visuais -->
+	<!-- <icon> -->
+	<!-- <large-icon></large-icon> -->
+	<!-- <small-icon></small-icon> -->
+	<!-- </icon> -->
+
+	<!-- =========================================================================================================================================== -->
+	<!-- Declaracao de um filtro -->
+	<filter>
+		<filter-name>AppFilter</filter-name>
+		<filter-class>filters.AppFilter</filter-class>
+		<async-supported>false</async-supported>
+
+		<!-- <description>Descricao Opcional do filtro</description> -->
+
+		<init-param>
+			<param-name>name</param-name>
+			<param-value>value</param-value>
+		</init-param>
+	</filter>
+
+	<!-- Mapeamento do filtro -->
+	<filter-mapping>
+		<filter-name>AppFilter</filter-name>
+
+		<!-- Mapeamento do filtro. Tanto servlet-name quando url-pattern serao considerados. Pelo menos uma dessas configuracoes é obrigatoria -->
+		<servlet-name>AppServlet</servlet-name>
+		<url-pattern>/AppServlet2</url-pattern>
+
+		<!-- O caractere coringa * pode ser utilizado em servlet-name para informar que esse filtro deve ser registrado para todas as servlets da aplicacao e recursos 
+			estaticos como paginas html -->
+		<!-- <servlet-name>*</servlet-name> -->
+
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>ASYNC</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+	<!-- =========================================================================================================================================== -->
+	<!-- Desclaracao de um listener -->
+	<listener>
+		<!-- Apenas listener-class é obrigatório -->
+		<listener-class>listeners.AppRequestListener</listener-class>
+
+		<!-- É possivel declarar varios listeners dentro do elemento listener -->
+		<listener-class>listeners.AppContextListener</listener-class>
+
+		<!-- <description>Descricao opcional</description> -->
+		<!-- <display-name>AppRequestListener</display-name> -->
+	</listener>
+
+	<!-- =========================================================================================================================================== -->
+	<!-- Declaracao de servlets -->
+	<servlet>
+		<!-- Nome amigavel da servlet -->
+		<display-name>AppServlet</display-name>
+
+		<servlet-name>AppServlet</servlet-name>
+
+		<!-- Nao é permitido especificar um servlet-class e um jsp-file ao mesmo tempo. Apenas uma dessas configuracoes podem ser utilizadas. -->
+		<servlet-class>servlets.AppServlet</servlet-class>
+
+		<!-- A declaracao de jsp-file é relativa ao contexto da aplicacao e indica um caminho de um arquivo JSP -->
+		<!-- <jsp-file>/pages/index.jsf</jsp-file> -->
+
+		<async-supported>false</async-supported>
+
+		<!-- Indica se este componentes esta disponivel ou nao -->
+		<enabled>true</enabled>
+
+		<!-- Parametros de inicializacao da servlet -->
+		<init-param>
+			<param-name>name</param-name>
+			<param-value>value</param-value>
+		</init-param>
+
+		<!-- Load-on-startup indica se a servlet deve ser inicializada (o metodo init ser chamado) na implantacao da aplicacao. O valor deve ser um inteiro e indica a 
+			ordem de inicializacao das servlets. As servlets com valores menores serao inicializadas antes das servlets com valores maiores. Caso 2 servlets diferentes tenham 
+			o mesmo valor de load-on-startup, a ordem de inicializacao fica por conta do web container. Caso o valor seja negativo, tera o mesmo efeito que omitir essa configuracao, 
+			ou seja, a servlet nao sera inicializada na implantacao. -->
+		<load-on-startup>0</load-on-startup>
+
+		<!-- Descricao opcional da servlet -->
+		<!-- <description>Descricao da Servlet</description> -->
+	</servlet>
+
+	<!-- Mapeamento da servlet. As duas configuracoes sao obrigatorias. -->
+	<servlet-mapping>
+		<servlet-name>AppServlet</servlet-name>
+		<url-pattern>/AppServlet</url-pattern>
+	</servlet-mapping>
+
+	<!-- =========================================================================================================================================== -->
+	<!-- Configuracao de sessao -->
+	<session-config>
+		<!-- Timeout (setMaxInactiveInterval). Caso o valor seja 0 ou negativo, a sessao nao tera um tempo de timeout -->
+		<session-timeout>30</session-timeout>
+
+		<!-- Indica qual deve ser o mecanismo de rastreamento de sessao que sera utilizado. COOKIE (padrao), URL ou SSL (HTTPS) -->
+		<tracking-mode>COOKIE</tracking-mode>
+
+		<!-- Caso o mecanismo de rastreamento de sessao seja COOKIE, é possível especificar as configuracoes do cookie que armazenará o jsessionid -->
+		<cookie-config>
+			<comment>Cookie de sessao</comment>
+			<http-only>true</http-only>
+			<max-age>60</max-age>
+		</cookie-config>
+	</session-config>
+
+	<!-- =========================================================================================================================================== -->
+	<!-- O mapeamento de MIME type é utilizado para informar para o cliente o tipo de conteúdo que será provido como resposta caso esse tipo fuja dos tipos padroes -->
+	<mime-mapping>
+		<!-- Extensao associada ao tipo, ou seja, toda vez que a resposta prover um arquivo do tipo txt, o cliente será informado que essa resposta é do tipo text/html -->
+		<extension>txt</extension>
+
+		<!-- Quando a aplicacao prover um arquivo txt como resposta, o cliente recebera o campo de cabecalho Content-Type como text/rtf -->
+		<mime-type>text/rtf</mime-type>
+	</mime-mapping>
+
+	<!-- =========================================================================================================================================== -->
+	<!-- Configuracao de páginas de erros que devem ser exibidas caso ocorra alguma excecao. Quando ocorre algum erro ou excecao, o web container verifica as paginas 
+		de erro configuradas e caso encontre alguma pagina compativel com o erro ocorrido, faz um redirecionamento (forwarding) para esta pagina adicionando atributos de 
+		erro na requisicao. -->
+	<!-- javax.servlet.error.exception -->
+	<!-- javax.servlet.error.exception_type -->
+	<!-- javax.servlet.error.message -->
+	<!-- javax.servlet.error.request_uri -->
+	<!-- javax.servlet.error.servlet_name -->
+	<!-- javax.servlet.error.status_code -->
+	<error-page>
+		<error-code>404</error-code>
+
+		<!-- Localizacao da página de erro que será exibida ou mapeamento de alguma Servlet (ou JSP) que deva ser executada quando esse erro ocorrer -->
+		<location>/error/error.html</location>
+	</error-page>
+
+	<error-page>
+		<exception-type>java.lang.Exception</exception-type>
+
+		<!-- Nao é possivel especificar um exception-type e um error-code. Apenas uma dessas configuracoes podem ser utilizadas. Caso um error-page seja mapeado para o 
+			mesmo codigo de erro, apenas o ultimo sera considerado. -->
+		<!-- <error-code>404</error-code> -->
+
+		<!-- Mapeamento para uma servlet -->
+		<location>/ErrorMapping</location>
+	</error-page>
+
+	<!-- =========================================================================================================================================== -->
+	<!-- Configuracoes de JSP. É um boa pratica reunir todas as configuracoes sobre o mesmo jsp-config element -->
+	<!-- <jsp-config> -->
+
+	<!-- É possivel configurar taglibs globais para serem utilizadas por todas as paginas JSP, apesar de também ser possivel configurar tablibraries diretamente nas 
+		paginas JSP's -->
+	<!-- <taglib> -->
+	<!-- Taglib-uri é o name space da taglib que sera utilizado nas importacoes dentro das paginas JSP's, por este motivo nao podem haver taglib-url duplicadas. -->
+	<!-- <taglib-uri>http://minhaTaglib.com</taglib-uri> -->
+
+	<!-- Caminho absoluto ou relativo do arquivo descritor de biblioteca de tags (TLD) -->
+	<!-- <taglib-location>/WEB-INF/minhaTaglib.tld</taglib-location> -->
+	<!-- </taglib> -->
+
+	<!-- ====================================== -->
+	<!-- Configuracoes de paginas JSP's sao feitas em grupos. Aqui é possivel definir propriedados para uma ou varias paginas JSP's de uma vez. Podem haver varios elementos 
+		jps-property-group no web.xml -->
+	<!-- <jsp-property-group> -->
+
+	<!-- Define o mapeamento para quais JSP's essas configuracoes de grupo deverao ser aplicadas. Pode haver varias url-pattern -->
+	<!-- <url-pattern>/pages/jsps/*</url-pattern> -->
+	<!-- <url-pattern>/teste.jsp</url-pattern> -->
+
+	<!-- Define a codificacao que sera utilizada para o parse das paginas JSP's desse grupo -->
+	<!-- <page-encoding>UTF-8</page-encoding> -->
+
+	<!-- Define se el devem ser avaliadas ou nao nesse grupo de JSP's -->
+	<!-- <el-ignored>false</el-ignored> -->
+
+	<!-- Define se scriptlets sao permitidos ou nao dentro das JSP's desse grupo -->
+	<!-- <scripting-invalid>true</scripting-invalid> -->
+
+	<!-- Define se as JSP's desse grupo devem ser interpetradas como documentos XML -->
+	<!-- <is-xml>false</is-xml> -->
+
+	<!-- Especifica que a pagina informada deve ser incluída no cabecalho (no inicio) de todas as paginas JSP's desse grupo -->
+	<!-- <include-prelude>/WEB-INF/header.html</include-prelude> -->
+	<!-- <include-prelude>/WEB-INF/header2.html</include-prelude> -->
+
+	<!-- Tem a mesma funcao de include-prelude, porem inclui os recursos informados no final (footer) de todas as paginas JSP's desse grupo -->
+	<!-- <include-coda>/WEB-INF/footer.html</include-coda> -->
+	<!-- <include-coda>/WEB-INF/footer2.html</include-coda> -->
+	<!-- </jsp-property-group> -->
+	<!-- </jsp-config> -->
+
+</web-app>

@@ -1,0 +1,61 @@
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd" version="2.0">
+
+  <tlib-version>1.0</tlib-version>
+
+  <short-name>My SCWCD Cooperating Tags</short-name>
+  <uri>http://www.garnerpress.com/books/scwcd1.4/mycooptags</uri>
+
+  <!-- Classic versions -->
+  <tag>
+    <name>choose</name>
+    <tag-class>mytags.MyChooseTag</tag-class>
+    <body-content>JSP</body-content>
+  </tag>
+
+  <tag>
+    <name>when</name>
+    <tag-class>mytags.MyWhenTag</tag-class>
+    <body-content>JSP</body-content>
+    <attribute>
+      <name>test</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>boolean</type>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>otherwise</name>
+    <tag-class>mytags.MyOtherwiseTag</tag-class>
+    <body-content>JSP</body-content>
+  </tag>
+
+
+  <!-- Simple tag versions -->
+  <tag>
+    <name>chooses</name>
+    <tag-class>mysimpletags.MyChooseTag</tag-class>
+    <body-content>scriptless</body-content>
+  </tag>
+
+  <tag>
+    <name>whens</name>
+    <tag-class>mysimpletags.MyWhenTag</tag-class>
+    <body-content>scriptless</body-content>
+    <attribute>
+      <name>test</name>
+      <required>true</required>
+      <rtexprvalue>true</rtexprvalue>
+      <type>boolean</type>
+    </attribute>
+  </tag>
+
+  <tag>
+    <name>otherwises</name>
+    <tag-class>mysimpletags.MyOtherwiseTag</tag-class>
+    <body-content>scriptless</body-content>
+  </tag>
+
+</taglib>
